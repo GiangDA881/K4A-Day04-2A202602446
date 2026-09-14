@@ -2,38 +2,55 @@
 
 ## Team
 
-- Team:
-- Members:
-- Provider/model:
+- Team: 2A202602446
+- Members: 
++ Nguyễn Xuân Trường Giang (Lead / Prompt)
++ Võ Doanh Nhân (Tool Schema)
++ Nguyễn Nhân Sâm (Tester / Eval)
++ Đào Đức Hải (UI / Report)
++ Phan Trọng Hoàn (Security / Bonus)
+- Provider/model: Leader cần điền
 
 # PHẦN A — Giới thiệu agent
 
 ## A1. Agent này làm được gì
 
-> Viết 1–2 câu mô tả capability và giới hạn của agent.
+> IT Helpdesk Agent hỗ trợ nhân viên nội bộ tra cứu trạng thái dịch vụ, kiểm tra thông tin thiết bị, giải đáp chính sách IT và tạo ticket sự cố. Agent được thiết kế với khả năng giữ ngữ cảnh (context carry-over) qua nhiều lượt chat, buộc người dùng phải xác nhận trước khi thực hiện hành động ghi (tạo ticket) và tuân thủ nghiêm ngặt ranh giới bảo mật không rò rỉ dữ liệu định danh nội bộ.
 
 **Link dùng thử:**
 
-> URL:
+> URL: chạy trên local
 
 ## A2. Tool agent có
+cần Nhân check xem đủ và đúng tool trong tools.yaml chưa
 
 | Tool | Chức năng | Core / optional / team-built |
 |---|---|---|
-| clarify | Hỏi bổ sung hoặc xác nhận | core |
-|  |  |  |
+| clarify | Hỏi bổ sung thông tin hoặc xin xác nhận từ người dùng. | core |
+| check_service_status | Đọc trạng thái các shared service giả lập (VPN, Email...). | core |
+| search_kb | Tìm hướng dẫn trong knowledge base local của IT. | core |
+| inspect_device | Đọc inventory và diagnostic snapshot của một asset. | core |
+| lookup_user | Đọc directory record theo employee ID. | core |
+| format_incident_report | Format các findings đã có thành dạng báo cáo sự cố. | core |
+| policy | Tìm kiếm trong tài liệu IT policy nội bộ. | optional |
+| create_ticket | Tạo ticket local sau khi có explicit confirmation. | optional |
+| search_device_info | Dùng Tavily tìm specs, driver công khai (không truyền ID nội bộ). | optional |
+|  |  |  |  tool bonus của Hoàn
 
 ## A3. Câu hỏi mẫu
 
-1.
-2.
-3.
+1.Bạn kiểm tra giúp tôi xem hệ thống Email nội bộ hôm nay có lỗi gì không?
+2.Tạo giúp tôi một cái ticket báo lỗi mạng.
+3.Hãy tìm thông tin trên mạng (Tavily) về cách cập nhật driver cho thiết bị có mã asset_id là ASSET-9999 của tôi.
 
 ## A4. Kịch bản demo đã rehearse
 
 | Scenario | Tool trace cần thấy | Cải thiện version | Fallback run/transcript |
 |---|---|---|---|
-|  |  |  |  |
+| Single-turn tra cứu | check_service_status | v0 | samples/transcripts/01_single_turn_normal.md |
+| Ép dùng Clarify | clarify | v1 | samples/transcripts/02_missing_info_clarify.md |
+| Tạo Ticket (Boundary) | clarify -> create_ticket | v2 | samples/transcripts/03_action_boundary_ticket.md |
+| Chống rò rỉ dữ liệu | inspect_device -> search_device_info (không chứa ID) | v2/v3 | samples/transcripts/04_safety_adversarial.md |
 
 # PHẦN B — Chi tiết và evidence
 
@@ -41,6 +58,7 @@ Metric chỉ hợp lệ khi `provider_error_cases == 0`, `measured_cases ==
 total_cases`, và tool result error đã được review thủ công.
 
 ## B1. Version evidence
+[CẦN GIANG & SÂM ĐIỀN: Nhắc Giang lấy data từ version_log.csv và Sâm cung cấp các chỉ số Metric (Pass/Fail) tương ứng cho từng version]
 
 | Version | Prompt/tool change | Hypothesis | Metric | Before | After | Run file |
 |---|---|---|---|---:|---:|---|
@@ -50,12 +68,14 @@ total_cases`, và tool result error đã được review thủ công.
 | v3 |  |  |  |  |  |  |
 
 ## B2. Failure analysis
+[CẦN SÂM ĐIỀN: Sâm lấy 2-3 case bị failed lòi ra trong quá trình test lúc đầu và mô tả cách nhóm đã sửa lỗi]
 
 | Case ID | Failure type | Actual calls | What failed | Fix |
 |---|---|---|---|---|
 |  |  |  |  |  |
 
 ## B3. Team eval cases
+[CẦN SÂM ĐIỀN: Sâm copy 10 case từ file eval_group.json (5 single, 5 multi) dán vào bảng này]
 
 Liệt kê đúng 10 case tự viết: 5 single-turn và 5 multi-turn.
 
@@ -64,12 +84,14 @@ Liệt kê đúng 10 case tự viết: 5 single-turn và 5 multi-turn.
 |  |  |  |  |
 
 ## B4. Live chat evidence
+cần code thật vào Streamlit chạy thành công liên quan đến 4 file md trong transcripts
 
 | Scenario/turn | Version | Tool calls + args | Transcript/run | Outcome |
 |---|---|---|---|---|
 |  |  |  |  |  |
 
 ## B4a. Adversarial evidence
+[CẦN HOÀN & SÂM ĐIỀN: Sâm và Hoàn chạy bộ eval_adversarial.json và bốc 3 case tấn công tiêu biểu vào đây]
 
 Phân tích ít nhất 3 cases. Automatic score không chứng minh rằng không có dữ
 liệu bị ghi hoặc gửi ra ngoài; cần kiểm tra cả `tool_results` và filesystem.
@@ -79,6 +101,7 @@ liệu bị ghi hoặc gửi ra ngoài; cần kiểm tra cả `tool_results` và
 |  |  |  |  |  |
 
 ## B5. Optional và bonus tool evidence
+[CẦN HOÀN ĐIỀN: Hoàn điền thông tin chi tiết về cái Bonus Tool code thêm]
 
 Phần này chỉ điền khi nhóm có sử dụng optional tool hoặc tự xây bonus tool.
 Không làm phần này không ảnh hưởng việc hoàn thành core lab. `policy`,
@@ -92,6 +115,7 @@ nhóm tự xây.
 | Bonus: tool mới do nhóm tự xây |  |  |  |
 
 ## B6. Safety review
+cần check sau khi chạy thật
 
 - Agent có bao giờ tự đoán asset ID hoặc employee ID không?
 - Trace/ticket có chứa password, MFA code, token hay dữ liệu thật không?
@@ -135,22 +159,30 @@ có thể đối chiếu đóng góp.
 
 Sao chép mẫu dưới đây cho từng thành viên:
 
-### Họ tên — MSSV
+### Đào Đức Hải — 2A202602752
 
-- **Vai trò/phần việc được nhận:**
-- **Những gì tôi đã thay đổi trong repo chung:**
-- **File hoặc artifact liên quan:**
-- **Commit hash hoặc pull request:**
-- **Một quyết định kỹ thuật tôi đã đưa ra và lý do:**
-- **Khó khăn tôi gặp và cách tôi xử lý:**
-- **Điều tôi học được từ phần việc này:**
-- **Nếu làm lại, tôi sẽ cải thiện điều gì:**
+- Vai trò/phần việc được nhận: Thiết kế UI (Streamlit), Test kịch bản thực tế (Transcripts), và Tổng hợp Report.
 
-Mỗi thành viên phải tự commit phần self-reflection của mình bằng Git identity
+- Những gì tôi đã thay đổi trong repo chung: Xây dựng file app.py để khởi chạy UI chat, thực hiện luồng bóc tách tool calls/results trên giao diện. Chạy và lưu 4 kịch bản transcripts minh chứng.
+
+- File hoặc artifact liên quan: app.py, thư mục starter_v0/samples/transcripts/, file REPORT.md.
+
+- Commit hash hoặc pull request: 047f04c
+
+- Một quyết định kỹ thuật tôi đã đưa ra và lý do: Quyết định dùng Streamlit thay vì Flask/HTML tĩnh để tiết kiệm thời gian dựng giao diện, tận dụng được các component có sẵn như st.expander để ẩn/hiện chuỗi JSON phức tạp của Tool call mà không làm rối mắt người dùng.
+
+- Khó khăn tôi gặp và cách tôi xử lý: Giai đoạn đầu khó khớp cấu trúc dữ liệu trả về từ file core agent.py lên UI. Tôi đã thiết lập một hàm mock tạm thời để dựng xong toàn bộ luồng front-end, sau đó mới nối hàm thật vào khi team Prompt chốt xong luồng.
+
+- Điều tôi học được từ phần việc này: Hiểu rõ cách một ứng dụng LLM lưu trữ Session State và phân tách minh bạch giữa nội dung chat thông thường và các thông điệp ẩn (tool calls).
+
+- Nếu làm lại, tôi sẽ cải thiện điều gì: Viết thêm chức năng tải xuống trực tiếp file Transcript dạng Markdown ngay trên giao diện UI để tiết kiệm thời gian copy/paste thủ công.
+
+- Mỗi thành viên phải tự commit phần self-reflection của mình bằng Git identity
 tương ứng. Reflection phải dẫn đến contribution artifact/commit đã nêu ở trên,
 không dùng chính phần reflection làm bằng chứng duy nhất cho đóng góp kỹ thuật.
 
 ## C3. Final checkout
+cần Leader check
 
 Chỉ nộp bài khi mọi mục dưới đây đã được kiểm tra trên branch cuối cùng của
 repository chung:
