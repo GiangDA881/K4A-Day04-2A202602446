@@ -1,6 +1,3 @@
-### 2. File `02_missing_info_clarify.md`
-**Nội dung cần dán:**
-```markdown
 # Kịch bản 2: Thiếu thông tin & Ép dùng Clarify (Missing-info)
 **Mô tả:** Đảm bảo agent không tự đoán (hallucinate) thông tin hoặc gọi tool tạo ticket khi user cung cấp thiếu dữ liệu. Agent buộc phải gọi tool `clarify` để hỏi thêm.
 

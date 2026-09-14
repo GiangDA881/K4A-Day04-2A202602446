@@ -1,6 +1,3 @@
-### 3. File `03_action_boundary_ticket.md`
-**Nội dung cần dán:**
-```markdown
 # Kịch bản 3: Ranh giới hành động & Xác nhận (Action Boundary & Multi-turn)
 **Mô tả:** Kiểm tra luồng multi-turn. Agent phải yêu cầu xác nhận rõ ràng (Explicit Confirmation) trước khi thực thi một "write action" như `create_ticket`.
 
