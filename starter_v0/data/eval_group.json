@@ -1,7 +1,104 @@
 {
   "dataset_id": "day04_v3_helpdesk_group",
   "dataset_role": "group",
-  "description": "Template intentionally left empty. The team must write exactly 10 original IT helpdesk cases: 5 single-turn query cases and 5 multi-turn turns cases.",
+  "description": "Ten original team-authored IT helpdesk cases: 5 single-turn query cases and 5 multi-turn cases.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_printer_hardware_check", "phase": "B", "suite": "group",
+      "query": "Máy in PR-404 bị kẹt giấy; kiểm tra riêng phần cứng của thiết bị.",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "inspect_device", "args": {"asset_id": "PR-404", "check": "hardware"}}]},
+      "metadata": {"skill": "device_specific_diagnostic", "difficulty": "medium", "what_it_tests": "Phân biệt asset máy in và nhóm chẩn đoán hardware."}
+    },
+    {
+      "id": "G02_two_service_status", "phase": "B", "suite": "group",
+      "query": "Kiểm tra đồng thời status của SSO và Wi-Fi production.",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [
+        {"name": "check_service_status", "args": {"service": "sso", "environment": "production"}},
+        {"name": "check_service_status", "args": {"service": "wifi", "environment": "production"}}
+      ]},
+      "metadata": {"skill": "parallel_shared_services", "difficulty": "hard", "what_it_tests": "Gọi cùng status tool hai lần, không bỏ sót dịch vụ độc lập."}
+    },
+    {
+      "id": "G03_missing_asset_identifier", "phase": "B", "suite": "group",
+      "query": "Kiểm tra tình trạng bảo mật chiếc desktop ở phòng kế toán.",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "metadata": {"skill": "no_identifier_guessing", "difficulty": "medium", "what_it_tests": "Không suy đoán asset ID từ vị trí hoặc mô tả thiết bị."}
+    },
+    {
+      "id": "G04_format_given_findings", "phase": "B", "suite": "group",
+      "query": "Chỉ chuyển các finding đã có thành brief report 'Email incident': timeout khi đăng nhập và email service degraded; không cần kiểm tra lại.",
+      "failure_type": "unnecessary_tool",
+      "expect": {"tool_calls": [{"name": "format_incident_report", "args": {"template": "brief", "incident_title": "Email incident"}}]},
+      "metadata": {"skill": "format_without_discovery", "difficulty": "medium", "what_it_tests": "Dùng formatter cho dữ liệu đã cung cấp, không gọi status hoặc KB thêm."}
+    },
+    {
+      "id": "G05_policy_mfa_boundary", "phase": "B", "suite": "group",
+      "query": "Tra policy nội bộ về việc nhân viên có được gửi mã OTP cho bộ phận hỗ trợ hay không.",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "policy", "args": {"policy_area": "access_control"}}]},
+      "metadata": {"skill": "route_security_policy", "difficulty": "medium", "what_it_tests": "Câu hỏi quy định MFA/OTP phải dùng policy, không lookup user hay tạo ticket."}
+    },
+    {
+      "id": "G06_fill_then_inspect_software", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Phần mềm trên laptop của mình bị lỗi, kiểm tra giúp."},
+        {"role": "user", "content": "Asset đúng là LT-318."},
+        {"role": "user", "content": "Chỉ kiểm tra software trên máy đó."}
+      ],
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "inspect_device", "args": {"asset_id": "LT-318", "check": "software"}}]},
+      "metadata": {"skill": "multiturn_missing_identifier", "difficulty": "hard", "what_it_tests": "Carry identifier được bổ sung và áp dụng check mới nhất."}
+    },
+    {
+      "id": "G07_switch_service_environment", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Kiểm tra VPN staging."},
+        {"role": "user", "content": "Đổi ý, kiểm tra email production thay vì VPN."},
+        {"role": "user", "content": "Chỉ cần status email production."}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "check_service_status", "args": {"service": "email", "environment": "production"}}]},
+      "metadata": {"skill": "multiturn_intent_switch", "difficulty": "hard", "what_it_tests": "Intent và environment mới nhất thay thế yêu cầu cũ."}
+    },
+    {
+      "id": "G08_cancel_pending_ticket", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tạo ticket lỗi Outlook trên LT-204 mức low."},
+        {"role": "user", "content": "Thôi, hủy yêu cầu tạo ticket."},
+        {"role": "user", "content": "Xác nhận là không thực hiện hành động nào."}
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {"no_tool": true, "behavior": "answer_without_tool"},
+      "metadata": {"skill": "multiturn_cancel_action", "difficulty": "hard", "what_it_tests": "Cancellation mới nhất ngăn cả clarify lẫn create_ticket."}
+    },
+    {
+      "id": "G09_confirm_revised_ticket", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Soạn ticket Wi-Fi chập chờn trên LT-240 mức medium."},
+        {"role": "user", "content": "Đổi mức ưu tiên thành high và xem lại nội dung."},
+        {"role": "user", "content": "Nội dung và mức high đã đúng, tôi xác nhận tạo ticket."}
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {"tool_calls": [{"name": "create_ticket", "args": {"asset_id": "LT-240", "priority": "high", "confirmed": true}}]},
+      "metadata": {"skill": "multiturn_explicit_confirmation", "difficulty": "hard", "what_it_tests": "Chỉ action sau xác nhận cuối cùng và giữ payload đã sửa."}
+    },
+    {
+      "id": "G10_asset_and_kb_followup", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Máy LT-318 không vào được mạng."},
+        {"role": "user", "content": "Hãy kiểm tra network của máy và tìm hướng dẫn Wi-Fi liên quan."},
+        {"role": "user", "content": "Dùng đúng asset LT-318, chỉ cần cả hai nguồn thông tin."}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [
+        {"name": "inspect_device", "args": {"asset_id": "LT-318", "check": "network"}},
+        {"name": "search_kb", "args": {"category": "wifi"}}
+      ]},
+      "metadata": {"skill": "multiturn_parallel_sources", "difficulty": "hard", "what_it_tests": "Carry asset và gọi đồng thời device diagnostic cùng KB đúng category."}
+    }
+  ]
 }
