@@ -1,6 +1,6 @@
 # Kế Hoạch Phân Công Nhiệm Vụ Nhóm — Lab Day 04 IT Helpdesk Agent
 
-> **Repository nộp bài:** [https://github.com/Gisgod8811/K4-DAY04-2A202602446](https://github.com/Gisgod8811/K4-DAY04-2A202602446)  
+> **Repository nộp bài:** [https://github.com/GiangDA881/K4-Day04-Prompt-Engineering-Tool-Calling-Labs](https://github.com/GiangDA881/K4-Day04-Prompt-Engineering-Tool-Calling-Labs)  
 > **Cấu trúc nhóm:** Phương án Mở rộng — 5 thành viên (Song song hóa công việc)
 
 ---
@@ -9,7 +9,7 @@
 
 | STT | Thành viên | MSSV | GitHub Username | Vai trò chính | Trách nhiệm cốt lõi |
 |---|---|---|---|---|---|
-| **1** | **Nguyễn Xuân Trường Giang** | 2A202602446 | `Gisgod8811` | **A (Team Lead / Prompt Architect)** | System Prompt, Context carry-over, Versioning & Git Merge |
+| **1** | **Nguyễn Xuân Trường Giang** | 2A202602446 | `GiangDA881` | **A (Team Lead / Prompt Architect)** | System Prompt, Context carry-over, Versioning & Git Merge |
 | **2** | *doanhnhan4605@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **B (Tool & Schema Engineer)** | Tools Schema (`tools.yaml`), Chuẩn hóa Enums/Args, Tavily |
 | **3** | *nguyennhansam0307@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **C (Eval & Red-Team Author)** | Viết 10 cases `eval_group.json`, Test 12 Adversarial attacks |
 | **4** | *haidao2004bt@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **D (UI & Report Coordinator)** | Live Chat Streamlit UI, Kịch bản demo, Chủ trì `REPORT.md` |
@@ -85,8 +85,8 @@ Mỗi thành viên làm việc độc lập trên branch cá nhân của mình �
 
 ```powershell
 # 1. Clone repository về máy
-git clone https://github.com/Gisgod8811/K4-DAY04-2A202602446.git
-cd K4-DAY04-2A202602446
+git clone https://github.com/GiangDA881/K4-Day04-Prompt-Engineering-Tool-Calling-Labs.git
+cd K4-Day04-Prompt-Engineering-Tool-Calling-Labs
 
 # 2. Tạo branch riêng theo username của mình
 git switch -c contrib/<github-username>

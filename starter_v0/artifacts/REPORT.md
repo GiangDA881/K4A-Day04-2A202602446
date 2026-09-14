@@ -4,13 +4,13 @@
 
 - **Team**: Nhóm K4-Day04 (Phân nhóm 5 thành viên)
 - **Members**:
-  1. **Nguyễn Xuân Trường Giang** (MSSV: `2A202602446`, GitHub: `Gisgod8811`) — *Team Lead & Prompt Architect*
+  1. **Nguyễn Xuân Trường Giang** (MSSV: `2A202602446`, GitHub: `GiangDA881`) — *Team Lead & Prompt Architect*
   2. **Trần Đỗ Doanh Nhân** (MSSV: `2A202602444`, GitHub: `doanhnhan4605`) — *Tool & Schema Engineer*
   3. **Nguyễn Nhân Sâm** (MSSV: `2A202602445`, GitHub: `nguyennhansam0307`) — *Eval & Red-Team Engineer*
   4. **Đào Ngọc Hải** (MSSV: `2A202602443`, GitHub: `haidao2004bt`) — *UI & Live Chat Lead*
   5. **Nguyễn Trọng Hoàn** (MSSV: `2A202602442`, GitHub: `tronghoanpth2101`) — *Security & Bonus Tool Engineer*
 - **Provider/model**: `openai` (Endpoint xKiro: `mistralai/mistral-large-2512`) / `gemini` (`gemini-2.5-flash`)
-- **Repository**: `https://github.com/Gisgod8811/K4-DAY04-2A202602446`
+- **Repository**: `https://github.com/GiangDA881/K4-Day04-Prompt-Engineering-Tool-Calling-Labs`
 
 ---
 
@@ -218,4 +218,4 @@ Chỉ nộp bài khi mọi mục dưới đây đã được kiểm tra trên br
 
 **URL repository chung dùng để nộp:**
 
-> URL: `https://github.com/Gisgod8811/K4-DAY04-2A202602446`
+> URL: `https://github.com/GiangDA881/K4-Day04-Prompt-Engineering-Tool-Calling-Labs`
