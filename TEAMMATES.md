@@ -13,7 +13,7 @@
 | **2** | *doanhnhan4605@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **B (Tool & Schema Engineer)** | Tools Schema (`tools.yaml`), Chuẩn hóa Enums/Args, Tavily |
 | **3** | *nguyennhansam0307@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **C (Eval & Red-Team Author)** | Viết 10 cases `eval_group.json`, Test 12 Adversarial attacks |
 | **4** | *haidao2004bt@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **D (UI & Report Coordinator)** | Live Chat Streamlit UI, Kịch bản demo, Chủ trì `REPORT.md` |
-| **5** | *tronghoanpth2101@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **E (Security & Bonus Tool)** | Chống Data Leakage (Tavily), Guardrails ticket, Code 1 Bonus Tool |
+| **5** | *Phan Trọng Hoàn* | *2A202602954* | *naoh-pt* | **E (Security & Bonus Tool)** | Chống Data Leakage (Tavily), Guardrails ticket, Code 1 Bonus Tool |
 
 ---
 

@@ -6,6 +6,18 @@
 #   this file -> tools/__init__.py -> data/eval_base.json
 #   -> data/eval_helpdesk_extension.json -> report/demo text
 tools:
+  # CONFLICT NOTE (B): E-owned bonus declaration; preserve when merging schema work.
+  - name: lookup_ticket_status
+    description: "Tra cứu trạng thái ticket đã có từ snapshot giả lập local bằng ticket ID chính xác. Chỉ đọc, không tạo ticket. Thiếu ID thì dùng clarify, không đoán. found=false chỉ có nghĩa không có trong snapshot; ticket mới tạo chưa tự đồng bộ vào snapshot."
+    parameters:
+      type: object
+      additionalProperties: false
+      properties:
+        ticket_id:
+          type: string
+          pattern: '^[Ll][Aa][Bb]-([0-9A-Fa-f]{8}|[0-9A-Fa-f]{32})$'
+          description: "Mã ticket người dùng cung cấp, ví dụ LAB-DE000001. Mỗi lần tra cứu một ID."
+      required: [ticket_id]
   # ---------------- Core tools ----------------
   - name: clarify
     description: "Gửi một câu hỏi cho người dùng."

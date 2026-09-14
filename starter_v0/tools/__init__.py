@@ -11,6 +11,8 @@ from .create_ticket.tool import create_ticket
 from .format_incident_report.tool import format_incident_report
 from .inspect_device.tool import inspect_device
 from .lookup_user.tool import lookup_user
+# CONFLICT NOTE (B): E bonus registration; keep in sync with tools.yaml.
+from .lookup_ticket_status.tool import lookup_ticket_status
 from .policy.tool import search_company_policy
 from .search_kb.tool import search_kb
 from .search_device_info.tool import search_device_info
@@ -31,6 +33,7 @@ TOOL_FUNCTIONS = {
     "format_incident_report": format_incident_report,
     "policy": search_company_policy,
     "create_ticket": create_ticket,
+    "lookup_ticket_status": lookup_ticket_status,
 }
 
 

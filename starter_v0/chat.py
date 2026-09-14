@@ -12,11 +12,11 @@ from providers import make_provider
 from providers.base import ToolCall
 from tools import TOOL_FUNCTIONS, load_tool_declarations, to_openai_tools
 from versioning import artifact_version_dict, build_artifact_version
+from ticket_session import TicketSession
 
 
 ROOT = Path(__file__).parent
 ARTIFACTS_DIR = ROOT / "artifacts"
-load_lab_env(ROOT)
 
 
 def now_iso() -> str:
@@ -41,7 +41,10 @@ def trim_history(history: list[dict[str, str]], window: int) -> list[dict[str, s
     return history[-window * 2:]
 
 
-def execute_tool_call(call: ToolCall) -> dict[str, Any]:
+def execute_tool_call(call: ToolCall, ticket_session: TicketSession | None = None) -> dict[str, Any]:
+    if call.name == "create_ticket":
+        result = (ticket_session or TicketSession()).propose(call.args)
+        return {"tool": call.name, "args": call.args, "result": result}
     func = TOOL_FUNCTIONS.get(call.name)
     if not func:
         return {
@@ -84,7 +87,16 @@ def run_model_tool_loop(
     tools: list[dict[str, Any]],
     model: str | None,
     max_tool_rounds: int,
+    ticket_session: TicketSession | None = None,
 ) -> dict[str, Any]:
+    # CONFLICT NOTE (D): persist this object in UI session state across turns.
+    # Missing session is fail-closed: previous approvals cannot authorize writes.
+    ticket_session = ticket_session or TicketSession()
+    latest = messages[-1] if messages else {}
+    action = ticket_session.begin_turn(latest.get("content", "") if latest.get("role") == "user" else "")
+    if action is not None:
+        return {"status": "answered", "assistant_text": json_text(action), "rounds": [],
+                "tool_events": [{"tool": "create_ticket", "result": action}]}
     working_messages = list(messages)
     rounds: list[dict[str, Any]] = []
     all_tool_events: list[dict[str, Any]] = []
@@ -113,7 +125,7 @@ def run_model_tool_loop(
 
         for call in calls:
             print(f"[tool] {call.name}({json.dumps(call.args, ensure_ascii=True, sort_keys=True)})")
-            event = execute_tool_call(call)
+            event = execute_tool_call(call, ticket_session)
             round_record["tool_results"].append(event)
             all_tool_events.append(event)
 
@@ -150,6 +162,7 @@ def write_transcript(path: Path, transcript: dict[str, Any]) -> None:
 
 
 def main() -> None:
+    load_lab_env(ROOT)
     parser = argparse.ArgumentParser(description="Interactive IT Helpdesk Agent chat with transcript logging.")
     parser.add_argument("--provider", choices=["openrouter", "openai", "anthropic", "gemini"], required=True)
     parser.add_argument("--model", default=None)
@@ -193,6 +206,7 @@ def main() -> None:
     print("Type /exit to stop.")
 
     history: list[dict[str, str]] = []
+    ticket_session = TicketSession()
     turn_index = 0
     while True:
         try:
@@ -230,6 +244,7 @@ def main() -> None:
                 tools=openai_tools,
                 model=args.model,
                 max_tool_rounds=args.max_tool_rounds,
+                ticket_session=ticket_session,
             )
             turn_record.update(result)
             assistant_text = result["assistant_text"]

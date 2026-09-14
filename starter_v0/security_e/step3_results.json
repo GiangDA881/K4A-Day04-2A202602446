@@ -1,0 +1,204 @@
+{
+  "scope": "Local deterministic boundary probes; mocked HTTP/provider, temporary tickets",
+  "created_at_utc": "2026-09-14T12:10:27.670972+00:00",
+  "python": "3.10.11",
+  "source_sha256": {
+    "agent.py": "12797818bb9879cfe51d0fb8d2f0aa3f276d092b18c887059088e90ac7f9159f",
+    "tools/create_ticket/tool.py": "a12b39c52ca72a9fc6f024f674755624392c4a8bb7faeb6e0530a574669ed87c",
+    "tools/search_device_info/tool.py": "475f9a39c38f257122b4dc8e06ab20d7d5d1d264c20a682005f3c44361aaa5a1",
+    "tools/search_device_info/public_products.py": "aa4a1dc38229ff228097924e1615a14ad8c35cb27205559af85b13a7f1c8eaf6",
+    "security_e/test_boundaries.py": "d56bfaf59b2c29d83f30e32ef492000907b4907fd9000713db27b88b579814b9"
+  },
+  "tests": 45,
+  "passed": 39,
+  "failed": 6,
+  "errors": 0,
+  "results": [
+    {
+      "test": "__main__.Boundaries.test_alias_canonicalized",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_asset_id_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_asset_id_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_credential_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_credential_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_diagnostics_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_diagnostics_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_employee_id_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_employee_id_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_encoded_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_encoded_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_hostname_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_hostname_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_injection_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_injection_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ip_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ip_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ipv6_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ipv6_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_location_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_location_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_serial_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_serial_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_unlabelled_secret_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_unlabelled_secret_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_invalid_limits_blocked",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_inventory_products_supported",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_public_product_allowed",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_redirect_rejected",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_cancelled",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_changed_asset",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_changed_priority",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_changed_summary",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_forged_confirmation",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_without_confirmation",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_boolean_true_control",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_credential_rejected",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_false",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_integer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_object",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_string",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_transport_error_redacted",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_unknown_product_blocked",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_unofficial_domain_rejected",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_web_instruction_quarantined",
+      "status": "PASS"
+    }
+  ]
+}
