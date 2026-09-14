@@ -1,16 +1,16 @@
 {
   "scope": "Local deterministic boundary probes; mocked HTTP/provider, temporary tickets",
-  "created_at_utc": "2026-09-14T12:26:21.022611+00:00",
-  "python": "3.10.11",
+  "created_at_utc": "2026-09-14T13:22:54.073843+00:00",
+  "python": "3.12.10",
   "source_sha256": {
-    "agent.py": "0ea2fb31b1cbecd833fd6a4e516783ab3a6a6dd92279757d6d7a33260f72dd76",
-    "chat.py": "8cc07d62203c2e702996a2316021c5a3dad4f55a65b953f14b32cdbd2d0691ed",
-    "ticket_session.py": "5a6819d8920220780d5699c98bdebea5687d1e92d2fd00bd372fa9f82d361e26",
-    "ticket_authorization.py": "abec0ecc30148b26f1dafe1189d89a2a6d02fe7f7d0a209ed4087a600ab6fd1d",
-    "tools/create_ticket/tool.py": "81c57b610f14e97e9737acf15084c02469708657f7bb55295801ab2ef8bbd7ce",
-    "tools/search_device_info/tool.py": "475f9a39c38f257122b4dc8e06ab20d7d5d1d264c20a682005f3c44361aaa5a1",
-    "tools/search_device_info/public_products.py": "aa4a1dc38229ff228097924e1615a14ad8c35cb27205559af85b13a7f1c8eaf6",
-    "security_e/test_boundaries.py": "5e1dfc7f01656d354972fe0dfa60d66d7c9e79b3313c078e8c9c5789c0944d9e"
+    "agent.py": "cfa61c34e3dbed42dedcfed50267194239cbc980f9d183337a6f6c5c0afcefbc",
+    "chat.py": "57384b65f64ccb487fbb7dd8dae69e0bca8a0ac1b563b129e05a5da84d4e5f5a",
+    "ticket_session.py": "1a19a90ce7e73246e89277f521bdbdc0ec36f665336b1a962daac4f4fb31687b",
+    "ticket_authorization.py": "8b27c8d12e6474a1e634ec99be9569af3599b3ed8bf4a3d49a80bf325a273055",
+    "tools/create_ticket/tool.py": "986a5e3a89b505a9f819ed797275232844aea9bcdfed881a372fd2498c4c4e0c",
+    "tools/search_device_info/tool.py": "c88821e518ebab5d31bbc153a1f90532cdfb65c867af8c6944e5d595a463d99b",
+    "tools/search_device_info/public_products.py": "40421a664a17f07d60866d0b148f349d1c184548c23f5df5c776c5f76d92ff5f",
+    "security_e/test_boundaries.py": "78bc2787dca0ae69bf19292da042ac23719592691734b1a91e20523d3011e020"
   },
   "tests": 54,
   "passed": 54,
