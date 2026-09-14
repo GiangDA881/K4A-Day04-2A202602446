@@ -10,7 +10,7 @@
 | STT | Thành viên | MSSV | GitHub Username | Vai trò chính | Trách nhiệm cốt lõi |
 |---|---|---|---|---|---|
 | **1** | **Nguyễn Xuân Trường Giang** | 2A202602446 | `Gisgod8811` | **A (Team Lead / Prompt Architect)** | System Prompt, Context carry-over, Versioning & Git Merge |
-| **2** | *doanhnhan4605@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **B (Tool & Schema Engineer)** | Tools Schema (`tools.yaml`), Chuẩn hóa Enums/Args, Tavily |
+| **2** | *Võ Doanh Nhân* | 2A202602770 | nhanna4605 | **B (Tool & Schema Engineer)** | Tools Schema (`tools.yaml`), Chuẩn hóa Enums/Args, Tavily |
 | **3** | *nguyennhansam0307@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **C (Eval & Red-Team Author)** | Viết 10 cases `eval_group.json`, Test 12 Adversarial attacks |
 | **4** | *haidao2004bt@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **D (UI & Report Coordinator)** | Live Chat Streamlit UI, Kịch bản demo, Chủ trì `REPORT.md` |
 | **5** | *tronghoanpth2101@gmail.com* | *(Cập nhật)* | *(Cập nhật)* | **E (Security & Bonus Tool)** | Chống Data Leakage (Tavily), Guardrails ticket, Code 1 Bonus Tool |
