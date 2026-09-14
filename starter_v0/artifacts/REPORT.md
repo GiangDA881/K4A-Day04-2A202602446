@@ -10,7 +10,7 @@
   4. **Đào Đức Hải** (MSSV: `2A202602752`, GitHub: `haidao2004bt`) — *UI & Live Chat Lead*
   5. **Phan Trọng Hoàn** (MSSV: `2A202602442`, GitHub: `naoh-pt`) — *Security & Bonus Tool Engineer*
 - **Provider/model**: `openai` (Endpoint xKiro: `mistralai/mistral-large-2512`) / `gemini` (`gemini-2.5-flash`)
-- **Repository**: `https://github.com/GiangDA881/K4-Day04-2A202602446`
+- **Repository**: `https://github.com/GiangDA881/K4A-Day04-2A202602446`
 
 ---
 
@@ -302,4 +302,4 @@ Chỉ nộp bài khi mọi mục dưới đây đã được kiểm tra trên br
 
 **URL repository chung dùng để nộp:**
 
-> URL: `https://github.com/GiangDA881/K4-Day04-2A202602446`
+> URL: `https://github.com/GiangDA881/K4A-Day04-2A202602446`

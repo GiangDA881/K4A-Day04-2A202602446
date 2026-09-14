@@ -1,6 +1,6 @@
 # Kế Hoạch Phân Công Nhiệm Vụ Nhóm — Lab Day 04 IT Helpdesk Agent
 
-> **Repository nộp bài:** [https://github.com/GiangDA881/K4-Day04-2A202602446](https://github.com/GiangDA881/K4-Day04-2A202602446)  
+> **Repository nộp bài:** [https://github.com/GiangDA881/K4A-Day04-2A202602446](https://github.com/GiangDA881/K4A-Day04-2A202602446)  
 > **Cấu trúc nhóm:** Phương án Mở rộng — 5 thành viên (Song song hóa công việc)
 
 ---
@@ -85,8 +85,8 @@ Mỗi thành viên làm việc độc lập trên branch cá nhân của mình �
 
 ```powershell
 # 1. Clone repository về máy
-git clone https://github.com/GiangDA881/K4-Day04-2A202602446.git
-cd K4-Day04-2A202602446
+git clone https://github.com/GiangDA881/K4A-Day04-2A202602446.git
+cd K4A-Day04-2A202602446
 
 # 2. Tạo branch riêng theo username của mình
 git switch -c contrib/<github-username>
