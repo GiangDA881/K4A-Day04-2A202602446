@@ -6,7 +6,7 @@
 - **Members**:
   1. **Nguyễn Xuân Trường Giang** (MSSV: `2A202602446`, GitHub: `GiangDA881`) — *Team Lead & Prompt Architect*
   2. **Võ Doanh Nhân** (MSSV: `2A202602770`, GitHub: `nhanna4605`) — *Tool & Schema Engineer*
-  3. **Nguyễn Nhân Sâm** (MSSV: `2A202602445`, GitHub: `nguyennhansam0307`) — *Eval & Red-Team Engineer*
+  3. **Nguyễn Nhân Sâm** (MSSV: `2A202602672`, GitHub: `Nguyen-Sam-sheep-zzz`) — *Eval & Red-Team Engineer*
   4. **Đào Ngọc Hải** (MSSV: `2A202602443`, GitHub: `haidao2004bt`) — *UI & Live Chat Lead*
   5. **Nguyễn Trọng Hoàn** (MSSV: `2A202602442`, GitHub: `tronghoanpth2101`) — *Security & Bonus Tool Engineer*
 - **Provider/model**: `openai` (Endpoint xKiro: `mistralai/mistral-large-2512`) / `gemini` (`gemini-2.5-flash`)
