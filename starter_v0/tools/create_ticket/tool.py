@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-import hashlib
 import json
 import re
 from datetime import datetime, timezone
 from typing import Any
+from uuid import uuid4
 
 from tools._shared import ROOT, err
+from ticket_authorization import consume_ticket_permission
 
 
 TICKET_DIR = ROOT / "tickets"
@@ -46,7 +47,11 @@ def create_ticket(
             "error": "restricted_sensitive_data",
             "message": "Remove credentials, tokens, MFA values, and recovery codes from the ticket summary.",
         }
-    if confirmed is not True:
+    # CONFLICT NOTE (A/B/D): Boolean supplied by a model is not authorization.
+    # TicketSession alone supplies a one-use permission for the shown payload.
+    authorized_payload = {"summary": normalized_summary, "priority": normalized_priority,
+                          "asset_id": normalized_asset}
+    if confirmed is not True or not consume_ticket_permission(authorized_payload):
         return {
             "tool": "create_ticket",
             "status": "needs_confirmation",
@@ -54,8 +59,7 @@ def create_ticket(
         }
     try:
         now = datetime.now(timezone.utc)
-        seed = f"{now.isoformat()}|{normalized_summary}|{normalized_priority}|{normalized_asset}"
-        ticket_id = "LAB-" + hashlib.sha256(seed.encode("utf-8")).hexdigest()[:8].upper()
+        ticket_id = "LAB-" + uuid4().hex.upper()
         payload = {
             "ticket_id": ticket_id,
             "summary": normalized_summary,
@@ -66,7 +70,9 @@ def create_ticket(
         }
         TICKET_DIR.mkdir(parents=True, exist_ok=True)
         path = TICKET_DIR / f"{ticket_id}.json"
-        path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        # Exclusive creation avoids overwriting another confirmed ticket.
+        with path.open("x", encoding="utf-8") as output:
+            json.dump(payload, output, ensure_ascii=False, indent=2)
         return {"tool": "create_ticket", "status": "created", "ticket_id": ticket_id, "path": str(path)}
     except Exception as exc:
         return err("create_ticket", exc)

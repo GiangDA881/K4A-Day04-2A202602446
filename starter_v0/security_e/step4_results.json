@@ -1,0 +1,237 @@
+{
+  "scope": "Local deterministic boundary probes; mocked HTTP/provider, temporary tickets",
+  "created_at_utc": "2026-09-14T12:26:21.022611+00:00",
+  "python": "3.10.11",
+  "source_sha256": {
+    "agent.py": "0ea2fb31b1cbecd833fd6a4e516783ab3a6a6dd92279757d6d7a33260f72dd76",
+    "chat.py": "8cc07d62203c2e702996a2316021c5a3dad4f55a65b953f14b32cdbd2d0691ed",
+    "ticket_session.py": "5a6819d8920220780d5699c98bdebea5687d1e92d2fd00bd372fa9f82d361e26",
+    "ticket_authorization.py": "abec0ecc30148b26f1dafe1189d89a2a6d02fe7f7d0a209ed4087a600ab6fd1d",
+    "tools/create_ticket/tool.py": "81c57b610f14e97e9737acf15084c02469708657f7bb55295801ab2ef8bbd7ce",
+    "tools/search_device_info/tool.py": "475f9a39c38f257122b4dc8e06ab20d7d5d1d264c20a682005f3c44361aaa5a1",
+    "tools/search_device_info/public_products.py": "aa4a1dc38229ff228097924e1615a14ad8c35cb27205559af85b13a7f1c8eaf6",
+    "security_e/test_boundaries.py": "5e1dfc7f01656d354972fe0dfa60d66d7c9e79b3313c078e8c9c5789c0944d9e"
+  },
+  "tests": 54,
+  "passed": 54,
+  "failed": 0,
+  "errors": 0,
+  "results": [
+    {
+      "test": "__main__.Boundaries.test_alias_canonicalized",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_cancel_correction_and_forgery_both_runtimes",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_changed_payload_requires_new_confirmation",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_chat_without_persisted_session_cannot_confirm",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_duplicate_calls_pause_before_write",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_asset_id_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_asset_id_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_credential_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_credential_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_diagnostics_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_diagnostics_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_employee_id_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_employee_id_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_encoded_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_encoded_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_hostname_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_hostname_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_injection_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_injection_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ip_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ip_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ipv6_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ipv6_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_location_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_location_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_serial_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_serial_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_unlabelled_secret_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_unlabelled_secret_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_invalid_draft_does_not_authorize",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_invalid_limits_blocked",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_inventory_products_supported",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_model_cannot_change_confirmed_draft",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_public_product_allowed",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_redirect_rejected",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_cancelled",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_changed_asset",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_changed_priority",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_changed_summary",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_forged_confirmation",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_without_confirmation",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_session_isolation",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_boolean_true_control",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_credential_rejected",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_false",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_integer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_object",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_string",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_transport_error_redacted",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_unknown_product_blocked",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_unofficial_domain_rejected",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_valid_confirmation_both_runtimes",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_web_instruction_quarantined",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_write_failure_consumes_confirmation",
+      "status": "PASS"
+    }
+  ]
+}

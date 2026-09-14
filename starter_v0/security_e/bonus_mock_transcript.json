@@ -1,0 +1,63 @@
+{
+  "mode": "mock_provider_local_tool",
+  "result": {
+    "status": "answered",
+    "assistant_text": "Snapshot status: in_progress",
+    "rounds": [
+      {
+        "round": 1,
+        "assistant_text": null,
+        "tool_calls": [
+          {
+            "name": "lookup_ticket_status",
+            "args": {
+              "ticket_id": "LAB-DE000002"
+            }
+          }
+        ],
+        "tool_results": [
+          {
+            "tool": "lookup_ticket_status",
+            "args": {
+              "ticket_id": "LAB-DE000002"
+            },
+            "result": {
+              "tool": "lookup_ticket_status",
+              "source": "educational_ticket_status_snapshot",
+              "ticket_id": "LAB-DE000002",
+              "found": true,
+              "status": "in_progress",
+              "priority": "medium",
+              "updated_at": "2026-09-14T08:30:00+07:00",
+              "snapshot_at": "2026-09-14T09:00:00+07:00"
+            }
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "assistant_text": "Snapshot status: in_progress",
+        "tool_calls": [],
+        "tool_results": []
+      }
+    ],
+    "tool_events": [
+      {
+        "tool": "lookup_ticket_status",
+        "args": {
+          "ticket_id": "LAB-DE000002"
+        },
+        "result": {
+          "tool": "lookup_ticket_status",
+          "source": "educational_ticket_status_snapshot",
+          "ticket_id": "LAB-DE000002",
+          "found": true,
+          "status": "in_progress",
+          "priority": "medium",
+          "updated_at": "2026-09-14T08:30:00+07:00",
+          "snapshot_at": "2026-09-14T09:00:00+07:00"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "scope": "Local deterministic boundary probes; mocked HTTP/provider, temporary tickets",
+  "created_at_utc": "2026-09-14T12:01:33.266983+00:00",
+  "python": "3.10.11",
+  "source_sha256": {
+    "agent.py": "12797818bb9879cfe51d0fb8d2f0aa3f276d092b18c887059088e90ac7f9159f",
+    "tools/create_ticket/tool.py": "a12b39c52ca72a9fc6f024f674755624392c4a8bb7faeb6e0530a574669ed87c",
+    "tools/search_device_info/tool.py": "00fa86d616cf605384edd1c7580a816c49c2b0cee429fa7e4390f2b38654a596",
+    "security_e/test_boundaries.py": "6491f24def1527b528780794105054e47a80c0ad47319695ebc866ad71b53de4"
+  },
+  "tests": 28,
+  "passed": 12,
+  "failed": 16,
+  "errors": 0,
+  "results": [
+    {
+      "test": "__main__.Boundaries.test_external_blocks_asset_id_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_asset_id_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_credential_in_manufacturer",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo token=synthetic-secret ThinkPad T14 support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_credential_in_model",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo ThinkPad T14 token=synthetic-secret support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False, 'include_domains': ['support.lenovo.com', 'psref.lenovo.com']}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_diagnostics_in_manufacturer",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo diagnostics: vpn auth failed ThinkPad T14 support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_diagnostics_in_model",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo ThinkPad T14 diagnostics: vpn auth failed support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False, 'include_domains': ['support.lenovo.com', 'psref.lenovo.com']}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_employee_id_in_manufacturer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_employee_id_in_model",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_hostname_in_manufacturer",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo hostname=finance-laptop.internal ThinkPad T14 support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_hostname_in_model",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo ThinkPad T14 hostname=finance-laptop.internal support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False, 'include_domains': ['support.lenovo.com', 'psref.lenovo.com']}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ip_in_manufacturer",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo 10.20.30.40 ThinkPad T14 support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_ip_in_model",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo ThinkPad T14 10.20.30.40 support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False, 'include_domains': ['support.lenovo.com', 'psref.lenovo.com']}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_serial_in_manufacturer",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo serial=SN-DEMO-9988 ThinkPad T14 support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_external_blocks_serial_in_model",
+      "status": "FAIL",
+      "reason": "Expected 'post' to not have been called. Called 1 times.\nCalls: [call('https://api.tavily.com/search', json={'query': 'Lenovo ThinkPad T14 serial=SN-DEMO-9988 support documentation official', 'search_depth': 'basic', 'max_results': 3, 'include_answer': False, 'include_raw_content': False, 'include_domains': ['support.lenovo.com', 'psref.lenovo.com']}, headers={'Authorization': 'Bearer synthetic-test-key', 'Content-Type': 'application/json'}, timeout=30),\n call().raise_for_status(),\n call().json()]."
+    },
+    {
+      "test": "__main__.Boundaries.test_public_product_allowed",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_cancelled",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_changed_asset",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_changed_priority",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_changed_summary",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_forged_confirmation",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_runtime_blocks_without_confirmation",
+      "status": "FAIL",
+      "reason": "1 != 0 : Unauthorized ticket written"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_boolean_true_control",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_credential_rejected",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_false",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_integer",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_object",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_ticket_rejects_confirmation_string",
+      "status": "PASS"
+    },
+    {
+      "test": "__main__.Boundaries.test_web_instruction_quarantined",
+      "status": "PASS"
+    }
+  ]
+}
