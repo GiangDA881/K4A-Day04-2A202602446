@@ -105,7 +105,7 @@ tools:
           type: string
           enum: [production, staging]
           default: production
-          description: "production khi người dùng không nêu môi trường hoặc nói production/prod. staging chỉ khi người dùng nói rõ staging. Giữ môi trường của lượt trước nếu người dùng nói \"vẫn là ...\"."
+          description: "production khi người dùng không nêu môi trường hoặc nói production/prod. staging CHỈ khi người dùng nói chính xác chữ staging. TUYỆT ĐỐI KHÔNG map demo, test, QA sang staging; khi gặp môi trường demo, test, QA thì KHÔNG gọi tool này mà PHẢI gọi clarify với response_type=choice và options=[\"production\", \"staging\"]."
       required: [service, environment]
 
   - name: inspect_device
@@ -283,7 +283,7 @@ tools:
         asset_id:
           type: string
           default: ""
-          description: "Asset ID nguyên văn từ hội thoại (ví dụ LT-204), hoặc chuỗi rỗng nếu sự cố không gắn với thiết bị. Không tự đoán."
+          description: "Asset ID chính xác từ hội thoại, giữ nguyên asset ID đã nêu từ các lượt trước (ví dụ LT-240 nếu người dùng đã nêu LT-240), tuyệt đối không tự ý đổi sang LT-204 hoặc máy khác. Để chuỗi rỗng nếu sự cố không gắn với thiết bị. Không tự đoán."
         confirmed:
           type: boolean
           default: false
