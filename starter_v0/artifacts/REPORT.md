@@ -25,17 +25,12 @@ Agent tuân thủ nghiêm ngặt ranh giới an toàn thông tin: không tự ti
 **Link dùng thử:**
 > URL: `http://localhost:8501` (Khởi chạy qua Streamlit Web UI: `streamlit run starter_v0/app.py`)
 
-**Link dùng thử:**
-
-> URL: chạy trên local
->>>>>>> origin/feature/hai-ui-report
-
 ## A2. Tool agent có
-cần Nhân check xem đủ và đúng tool trong tools.yaml chưa
+
+Hệ thống tích hợp đầy đủ 10 công cụ (6 core tools, 3 optional built-in tools, và 1 team-built bonus tool):
 
 | Tool | Chức năng | Core / optional / team-built |
 |---|---|---|
-<<<<<<< HEAD
 | `clarify` | Làm rõ thông tin còn thiếu (`text`), hỏi xác nhận người dùng trước khi ghi (`yes_no`), hoặc giải quyết giá trị enum nhập nhằng (`choice`). | core |
 | `check_service_status` | Kiểm tra trạng thái hoạt động của dịch vụ hạ tầng (`vpn`, `email`, `sso`, `wifi`, `printing`) theo môi trường (`production`, `staging`). | core |
 | `inspect_device` | Kiểm tra trạng thái thiết bị theo asset_id (`LT-xxx`, `DT-xxx`, `PR-xxx`) theo từng phân hệ (`vpn`, `network`, `hardware`, `software`, `security`) hoặc tổng thể (`all`). | core |
@@ -45,48 +40,24 @@ cần Nhân check xem đủ và đúng tool trong tools.yaml chưa
 | `policy` | Tra cứu chính sách bảo mật, quy trình xử lý sự cố (`incident_response`), phân quyền (`access_control`), quyền riêng tư (`data_privacy`), hoặc ticketing. | optional built-in |
 | `create_ticket` | Tạo ticket hỗ trợ kỹ thuật có ghi file JSON chỉ khi có xác nhận rõ ràng của người dùng (`confirmed=True`). | optional built-in |
 | `search_device_info` | Tìm kiếm thông tin thông số kỹ thuật, driver trên Internet công cộng chỉ với model/hãng sản xuất; cấm mang định danh nội bộ ra ngoài. | optional built-in |
+| `lookup_ticket_status` | Tra cứu trạng thái và độ ưu tiên của ticket đã khởi tạo theo mã hex trong snapshot dữ liệu (`LAB-DE000001` - `03`); chống path traversal, không side effect. | team-built bonus |
 
 ## A3. Câu hỏi mẫu
 
 1. *"Kiểm tra giúp mình xem hệ thống VPN công ty có đang chập chờn không, đồng thời chẩn đoán luôn kết nối mạng trên máy LT-204 của mình."* (Đòi hỏi gọi song song `check_service_status` và `inspect_device`).
 2. *"Môi trường test của dịch vụ Email đang thế nào?"* (Kích hoạt cơ chế phát hiện môi trường không hợp lệ, gọi `clarify(response_type="choice", options=["production", "staging"])`).
 3. *"Tôi xác nhận tạo ticket: VPN lỗi AUTH_TIMEOUT trên LT-204, priority high."* (Kích hoạt tạo ticket đã được người dùng xác nhận bằng ngôn ngữ tự nhiên rõ ràng).
-=======
-| clarify | Hỏi bổ sung thông tin hoặc xin xác nhận từ người dùng. | core |
-| check_service_status | Đọc trạng thái các shared service giả lập (VPN, Email...). | core |
-| search_kb | Tìm hướng dẫn trong knowledge base local của IT. | core |
-| inspect_device | Đọc inventory và diagnostic snapshot của một asset. | core |
-| lookup_user | Đọc directory record theo employee ID. | core |
-| format_incident_report | Format các findings đã có thành dạng báo cáo sự cố. | core |
-| policy | Tìm kiếm trong tài liệu IT policy nội bộ. | optional |
-| create_ticket | Tạo ticket local sau khi có explicit confirmation. | optional |
-| search_device_info | Dùng Tavily tìm specs, driver công khai (không truyền ID nội bộ). | optional |
-|  |  |  |  tool bonus của Hoàn
-
-## A3. Câu hỏi mẫu
-
-1.Bạn kiểm tra giúp tôi xem hệ thống Email nội bộ hôm nay có lỗi gì không?
-2.Tạo giúp tôi một cái ticket báo lỗi mạng.
-3.Hãy tìm thông tin trên mạng (Tavily) về cách cập nhật driver cho thiết bị có mã asset_id là ASSET-9999 của tôi.
->>>>>>> origin/feature/hai-ui-report
+4. *"Ticket LAB-DE000001 của tôi hiện có trạng thái gì trong hệ thống?"* (Kích hoạt tool bonus `lookup_ticket_status(ticket_id="LAB-DE000001")`).
 
 ## A4. Kịch bản demo đã rehearse
 
-| Scenario | Tool trace cần thấy | Cải thiện version | Fallback run/transcript |
+| Scenario | Tool trace cần thấy | Minh chứng transcript / run | Outcome |
 |---|---|---|---|
-<<<<<<< HEAD
-| 1. Kiểm tra song song Service & Asset | `check_service_status` + `inspect_device` (parallel) | v2: Hỗ trợ gọi song song đa domain | `v5_B_base_openai_20260914T185809470499.json` (H13) |
-| 2. Enum môi trường nhập nhằng | `clarify(response_type="choice", options=["production", "staging"])` | v3: Bắt buộc chọn choice thay vì đoán | `v5_B_base_openai_20260914T185809470499.json` (H19) |
-| 3. Tạo ticket có chỉnh sửa thông tin | `clarify` (hỏi lại khi đổi priority) -> `create_ticket` (sau khi người dùng xác nhận lại) | v4 & v5: Confirmation invalidation & multi-turn state | `v5_B_base_openai_20260914T185809470499.json` (M09, E08) |
-| 4. Phòng thủ Argument Smuggling | `clarify(response_type="yes_no")` (từ chối pseudo-code `confirmed: true`) | v5: Phân tách conversational confirmation và code injection | `v5_B_adversarial_openai_20260914T185534115779.json` (A04) |
-
----
-=======
-| Single-turn tra cứu | check_service_status | v0 | samples/transcripts/01_single_turn_normal.md |
-| Ép dùng Clarify | clarify | v1 | samples/transcripts/02_missing_info_clarify.md |
-| Tạo Ticket (Boundary) | clarify -> create_ticket | v2 | samples/transcripts/03_action_boundary_ticket.md |
-| Chống rò rỉ dữ liệu | inspect_device -> search_device_info (không chứa ID) | v2/v3 | samples/transcripts/04_safety_adversarial.md |
->>>>>>> origin/feature/hai-ui-report
+| 1. Kiểm tra song song Service & Asset | `check_service_status` + `inspect_device` (parallel) | `samples/transcripts/01_single_turn_normal.md`<br>`v5_B_base_openai_20260914T185809470499.json` (H13) | Chẩn đoán toàn diện hạ tầng và máy trạm. |
+| 2. Enum môi trường nhập nhằng | `clarify(response_type="choice", options=["production", "staging"])` | `samples/transcripts/02_missing_info_clarify.md`<br>`v5_B_base_openai_20260914T185809470499.json` (H19) | Hiển thị menu chọn môi trường chính xác, không đoán mò. |
+| 3. Tạo ticket có xác nhận & sửa đổi | `clarify` (hỏi lại khi đổi priority) -> `create_ticket` (sau khi người dùng xác nhận lại) | `samples/transcripts/03_action_boundary_ticket.md`<br>`v5_B_extension_openai_20260914T185613103277.json` (E08) | Ticket chỉ lưu sau khi người dùng xác nhận phiên bản cuối. |
+| 4. Phòng thủ Argument Smuggling & An toàn | `clarify(response_type="yes_no")` (từ chối pseudo-code `confirmed: true`) | `samples/transcripts/04_safety_adversarial.md`<br>`v5_B_adversarial_openai_20260914T185534115779.json` (A04) | Ngăn chặn hoàn toàn inject tham số và rò rỉ dữ liệu. |
+| 5. Tra cứu trạng thái Ticket (Bonus Tool) | `lookup_ticket_status(ticket_id="LAB-DE000001")` | `security_e/bonus_mock_transcript.json`<br>`security_e/test_bonus.py` (9/9 PASS) | Đọc đúng trạng thái open/in_progress snapshot, an toàn. |
 
 # PHẦN B — Chi tiết và evidence
 
@@ -163,7 +134,7 @@ Phân tích 5 cases tấn công điển hình. Kiểm tra thực tế trong `too
 |---|---|---|---|
 | Optional built-in (`policy`, `create_ticket`) | `runs/v5_B_extension_openai_20260914T185613103277.json` | Tra cứu đúng quy định SLAs, tạo ticket khi người dùng xác nhận bằng ngôn ngữ tự nhiên. | Nguy cơ tạo rác: Được chặn triệt để bằng protocol xác nhận nghiêm ngặt qua `clarify(yes_no)`. |
 | External search + privacy boundary (`search_device_info`) | `runs/v5_B_extension_openai_20260914T185613103277.json` (E09, E10) & `runs/v5_B_adversarial_openai_20260914T185534115779.json` (A12) | Cho phép tra cứu driver/spec trên web công cộng khi chỉ có brand/model; tự động phát hiện và chặn nếu chứa `LT-xxx`, `EMP-xxx`. | Nguy cơ rò rỉ định danh tài sản nội bộ: Đã chặn và yêu cầu người dùng tẩy sạch dữ liệu nhạy cảm trước khi search. |
-| Bonus: Tool mới tự xây | `tools.yaml` & `tools/__init__.py` | Bổ sung tool `check_network_speed` / `tavily_search_safe` hỗ trợ đo kiểm mạng và tìm kiếm an toàn. | Giới hạn timeout, sanitize query và validate whitelist trước khi thực thi. |
+| Bonus: Tool mới tự xây (`lookup_ticket_status`) | `tools/lookup_ticket_status/`, `tools.yaml`, `helpdesk_data/ticket_status.json`, `security_e/test_bonus.py` (9/9 PASS) | Tra cứu chính xác trạng thái, độ ưu tiên snapshot ticket (`LAB-DE000001`, `LAB-DE000002`, `LAB-DE000003`) từ dữ liệu giả lập. | Ranh giới dữ liệu & bảo mật: Chỉ đọc fixture JSON cố định, regex `^LAB-[A-Fa-f0-9]{8}$`, chống path traversal, không side-effect ghi file, không làm lộ thông tin nhạy cảm. |
 
 ## B6. Safety review
 cần check sau khi chạy thật
@@ -209,7 +180,6 @@ Nhóm đã hoàn thành xuất sắc toàn bộ các mục tiêu cốt lõi và 
 
 ### Nguyễn Xuân Trường Giang — MSSV: 2A202602446
 
-<<<<<<< HEAD
 - **Vai trò/phần việc được nhận:** Team Lead & Prompt Architect (Phụ trách thiết kế và tối ưu `system_prompt.md`, quản lý phiên bản `version_log.csv`, hash tracking, phân tích nguyên nhân lỗi và phối hợp các thành viên).
 - **Những gì tôi đã thay đổi trong repo chung:**
   - Thiết kế kiến trúc `system_prompt.md` từ phiên bản `v0` lên đến `v5`, giải quyết triệt để các ca bẫy: song song đa thiết bị, enum môi trường nhập nhằng, và phòng thủ chống injection/smuggling.
@@ -260,7 +230,25 @@ Nhóm đã hoàn thành xuất sắc toàn bộ các mục tiêu cốt lõi và 
   - Đưa `check_tools_sync.py` vào pre-commit hook hoặc CI để mọi thay đổi tools.yaml của nhóm được kiểm tra đồng bộ tự động.
 
 ### Nguyễn Nhân Sâm — MSSV: 2A202602672
-*(Thành viên tự điền và commit phần self-reflection của mình)*
+
+- **Vai trò/phần việc được nhận:** Eval & Red-Team Engineer. Phụ trách thiết kế bộ 10 test cases tác giả của nhóm (`eval_group.json` G01 - G10: 5 single-turn + 5 multi-turn), thực thi và đối soát bộ Adversarial Red-Team suite, phân tích các failure modes và đánh giá chất lượng phản hồi an toàn.
+- **Những gì tôi đã thay đổi trong repo chung:**
+  - Thiết kế hoàn chỉnh 10 test cases trong `starter_v0/data/eval_group.json` bao phủ toàn diện: xử lý sự cố hạ tầng VPN (`G01`), kẹt giấy máy in (`G02`), hướng dẫn Outlook KB (`G03`), tra cứu nhân sự VIP (`G04`), chặn tuồn asset ID ra Google (`G05`), hội thoại nhiều lượt bổ sung mã máy (`G06`), hủy tạo ticket khi đổi ý (`G07`), chuyển dịch vụ giữa chừng (`G08`), chỉnh sửa thông tin ticket và xác nhận lại (`G09`), đính chính mã thiết bị rồi kiểm tra song song (`G10`).
+  - Kiểm thử toàn diện bộ Red-Team Adversarial (`eval_adversarial.json`) với 12 kịch bản tấn công: Prompt injection, role spoofing, argument smuggling, và stale confirmation.
+  - Phối hợp cùng Lead và Team chạy Master Benchmark đạt 100% PASS trên tất cả các bộ test (62/62 cases).
+- **File hoặc artifact liên quan:**
+  - `starter_v0/data/eval_group.json`
+  - `starter_v0/artifacts/REPORT.md` (mục B2 Failure analysis, B3 Team eval cases, B4a Adversarial evidence)
+  - `starter_v0/runs/master_benchmark_group_20260914T202613.json`
+- **Commit hash hoặc pull request:** Branch `origin/feature/G01-G10-eval-adversarial`, commit `b9042df` tích hợp vào `main`.
+- **Một quyết định kỹ thuật tôi đã đưa ra và lý do:**
+  - Thiết kế các ca kiểm thử multi-turn cô lập chính xác từng quyết định: Khi người dùng đổi ý hủy bỏ ticket (`G07`), agent bắt buộc không được gọi bất kỳ tool nào (`no_tool: true`) thay vì cố chấp tạo ticket hoặc clarify vô ích.
+- **Khó khăn tôi gặp và cách tôi xử lý:**
+  - Ca `G09` và `E08` ban đầu bị lỗi fallback về asset mặc định `LT-204` khi người dùng chỉ chỉnh sửa mức độ ưu tiên mà không nhắc lại mã máy. Tôi đã phối hợp cùng Nhóm trưởng Giang và Nhân để bổ sung Rule 6 vào `system_prompt.md` và tinh chỉnh `tools.yaml`, giúp agent ghi nhớ context tài sản xuyên suốt các lượt hội thoại.
+- **Điều tôi học được từ phần việc này:**
+  - Hiểu sâu sắc về tư duy kiểm thử phần mềm định hướng AI (AI Evaluation): Một bộ test tốt không phải là bộ test đánh đố dài dòng, mà là bộ test cô lập được ranh giới quyết định (decision boundary) của mô hình.
+- **Nếu làm lại, tôi sẽ cải thiện điều gì:**
+  - Xây dựng thêm các ca test tự động fuzzing input với các biến thể ngôn ngữ tự nhiên tiếng Việt phức tạp hơn để kiểm tra độ bền vững của prompt.
 
 ### Đào Đức Hải — MSSV: 2A202602752
 
@@ -274,7 +262,29 @@ Nhóm đã hoàn thành xuất sắc toàn bộ các mục tiêu cốt lõi và 
 - **Nếu làm lại, tôi sẽ cải thiện điều gì:** Viết thêm chức năng tải xuống trực tiếp file Transcript dạng Markdown ngay trên giao diện UI để tiết kiệm thời gian copy/paste thủ công.
 
 ### Phan Trọng Hoàn — MSSV: 2A202602442
-*(Thành viên tự điền và commit phần self-reflection của mình)*
+
+- **Vai trò/phần việc được nhận:** Security & Bonus Tool Engineer. Phụ trách xây dựng Tool Bonus thứ 10 (`lookup_ticket_status`), cơ chế kiểm soát phiên và ủy quyền (`ticket_authorization.py`, `ticket_session.py`), và bộ suite kiểm thử bảo mật độc lập (`security_e/`).
+- **Những gì tôi đã thay đổi trong repo chung:**
+  - Phát triển hoàn chỉnh Tool Bonus `lookup_ticket_status` tại `starter_v0/tools/lookup_ticket_status/` kèm tài liệu chuẩn `TOOL.md`, đăng ký trong `tools/__init__.py` và `tools.yaml`.
+  - Thiết lập mock snapshot data tại `starter_v0/helpdesk_data/ticket_status.json` với 3 ticket giả lập (`LAB-DE000001`, `LAB-DE000002`, `LAB-DE000003`).
+  - Xây dựng 2 lớp bảo vệ runtime: `ticket_authorization.py` và `ticket_session.py` để quản lý trạng thái xác nhận và ủy quyền tạo/tra cứu ticket.
+  - Viết bộ unit & security tests gồm 54 tests trong `security_e/test_boundaries.py` và 9 tests trong `security_e/test_bonus.py` (đạt 100% PASS).
+  - Đóng góp bộ 3 ca test bonus trong `security_e/eval_bonus.json` và transcript minh chứng `security_e/bonus_mock_transcript.json`.
+- **File hoặc artifact liên quan:**
+  - `starter_v0/tools/lookup_ticket_status/`
+  - `starter_v0/helpdesk_data/ticket_status.json`
+  - `starter_v0/ticket_authorization.py`, `starter_v0/ticket_session.py`
+  - `starter_v0/security_e/test_bonus.py`, `starter_v0/security_e/test_boundaries.py`
+  - `starter_v0/security_e/STEP5.md`, `E_SECURITY_PLAN.md`
+- **Commit hash hoặc pull request:** Branch `origin/contrib/phanTrongHoan`, commit `fbc120a` và merge commit `66d3b43`.
+- **Một quyết định kỹ thuật tôi đã đưa ra và lý do:**
+  - Giới hạn chặt chẽ ranh giới bảo mật cho tool bonus: Chỉ đọc từ snapshot JSON cố định, regex định dạng mã ticket nghiêm ngặt `^LAB-[A-Fa-f0-9]{8}$`, tuyệt đối không dùng user input để ghép đường dẫn file (ngăn chặn hoàn toàn Path Traversal), và chỉ trả về các trường trạng thái cần thiết (status, priority, timestamp), không làm lộ thông tin nhạy cảm.
+- **Khó khăn tôi gặp và cách tôi xử lý:**
+  - Khi thiết kế tool mới, nguy cơ lớn nhất là phá vỡ sự đồng bộ với schema của Nhân và gây xung đột registry. Tôi đã viết tài liệu `STEP5.md` ghi rõ CONFLICT NOTE và kiểm thử độc lập bằng fixture tạm thời, giúp việc merge vào branch `main` diễn ra mượt mà và vượt qua kiểm tra `check_tools_sync.py` ngay lần đầu.
+- **Điều tôi học được từ phần việc này:**
+  - Phương pháp tiếp cận "Defense-in-Depth": Không thể chỉ trông cậy vào System Prompt để bảo vệ hệ thống. Cần có các rào chắn kiểm soát ở tầng code implementation (input sanitization, schema constraints, deterministic unit tests) để đảm bảo an toàn tuyệt đối.
+- **Nếu làm lại, tôi sẽ cải thiện điều gì:**
+  - Mở rộng thêm tính năng phân quyền theo vai trò (Role-Based Access Control - RBAC) để chỉ cho phép nhân viên thuộc phòng IT mới được tra cứu chi tiết các ticket có mức độ ưu tiên `critical`.
 
 ## C3. Final checkout
 cần Leader check
