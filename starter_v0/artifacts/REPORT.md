@@ -5,7 +5,7 @@
 - **Team**: Nhóm K4-Day04 (Phân nhóm 5 thành viên)
 - **Members**:
   1. **Nguyễn Xuân Trường Giang** (MSSV: `2A202602446`, GitHub: `Gisgod8811`) — *Team Lead & Prompt Architect*
-  2. **Trần Đỗ Doanh Nhân** (MSSV: `2A202602444`, GitHub: `doanhnhan4605`) — *Tool & Schema Engineer*
+  2. **Võ Doanh Nhân** (MSSV: `2A202602770`, GitHub: `nhanna4605`) — *Tool & Schema Engineer*
   3. **Nguyễn Nhân Sâm** (MSSV: `2A202602445`, GitHub: `nguyennhansam0307`) — *Eval & Red-Team Engineer*
   4. **Đào Ngọc Hải** (MSSV: `2A202602443`, GitHub: `haidao2004bt`) — *UI & Live Chat Lead*
   5. **Nguyễn Trọng Hoàn** (MSSV: `2A202602442`, GitHub: `tronghoanpth2101`) — *Security & Bonus Tool Engineer*
@@ -191,8 +191,33 @@ Nhóm đã hoàn thành xuất sắc toàn bộ các mục tiêu cốt lõi và 
 - **Nếu làm lại, tôi sẽ cải thiện điều gì:**
   - Tôi sẽ xây dựng một script tự động hóa ma trận kiểm thử (Test Matrix Runner) để chỉ bằng một click chuột có thể chạy đồng thời cả 3 bộ eval và tự động cập nhật bảng markdown trong báo cáo.
 
-### Trần Đỗ Doanh Nhân — MSSV: 2A202602444
-*(Thành viên tự điền và commit phần self-reflection của mình)*
+### Võ Doanh Nhân — MSSV: 2A202602770
+
+- **Vai trò/phần việc được nhận:** Tool & Schema Engineer. Phụ trách `tools.yaml`: chuẩn hóa description, `required`, `enum` của 9 tool, đồng bộ tên tool/tham số với code trong `starter_v0/tools/`, và kiểm thử tích hợp Tavily cho `search_device_info`.
+- **Những gì tôi đã thay đổi trong repo chung:**
+  - Viết lại toàn bộ `tools.yaml`. Mỗi tool nêu rõ khi nào dùng, khi nào không dùng, và ranh giới side effect / external data. Mỗi enum có bảng map từ khóa sang giá trị (ví dụ Outlook → `email`, driver/BIOS → `software`, MFA → `access_control`).
+  - Siết schema: `pattern` cho `asset_id` (`^(LT|DT|MB|PR|RM)-[0-9]+$`) và `employee_id` (`^EMP-[0-9]+$`); `minimum`/`maximum` cho `top_k`, `max_results`; bắt buộc các tham số quyết định hành vi (`clarify.response_type`, `inspect_device.check`, `search_kb.category`, `policy.policy_area`, `create_ticket.priority/asset_id/confirmed`).
+  - Viết `scripts/check_tools_sync.py`, script kiểm tra deterministic (không cần model): tên tool khớp registry, tham số khớp chữ ký hàm Python, enum khớp dữ liệu thật trong `helpdesk_data/` và `company_policy/`, `inputs` khớp `TOOL.md`, args mong đợi trong mọi `data/eval_*.json` hợp lệ, schema được Gemini SDK chấp nhận.
+  - Smoke test 9 tool local và Tavily. `search_device_info` chỉ trả kết quả từ `support.lenovo.com`/`psref.lenovo.com`, và chặn query có chèn `LT-204 EMP-1001`.
+- **File hoặc artifact liên quan:**
+  - `starter_v0/artifacts/tools.yaml`
+  - `starter_v0/scripts/check_tools_sync.py`
+  - `starter_v0/artifacts/tools_schema_evidence.md` (hypothesis, metric, failure analysis từng version)
+  - `starter_v0/runs/tools_schema_iterations/` (run khi giữ prompt v1, chỉ đổi tools.yaml) và `starter_v0/runs/v6_B_extension_openrouter_20260914T194558524378.json`
+- **Commit hash hoặc pull request:** Các commit trên branch `contrib/nhanna4605`, gửi Pull Request từ fork `nhanna4605` vào `main`.
+- **Một quyết định kỹ thuật tôi đã đưa ra và lý do:**
+  - Đo tác động của `tools.yaml` tách biệt với prompt: giữ nguyên prompt v1 và chỉ thay tools.yaml, cùng model `mistralai/mistral-large-2512`. Nhờ vậy thay đổi metric chứng minh được là do tool declaration: base 0.9333 → 1.0, adversarial 0.5833 → 0.75, số ticket bị tạo trái phép trong adversarial 4 → 1. Trong đó H10 được sửa chỉ bằng việc bắt buộc `response_type`, cho thấy `required` trong schema cũng là một phần của prompt.
+  - Tôi bác bỏ một thay đổi của chính mình (v2.2): thêm quy tắc "đòi bỏ qua xác nhận" làm adversarial không tăng mà còn gây regression E08, nên tôi viết lại thành định nghĩa "xác nhận hợp lệ" có ví dụ cụ thể (v2.3).
+- **Khó khăn tôi gặp và cách tôi xử lý:**
+  - Gemini free tier chỉ cho 20 request/ngày/model, không đủ cho một lần chạy base 30 case. Tôi chuyển sang `mistral-large-2512` qua endpoint tương thích OpenAI (xKiro) bằng biến `OPENROUTER_BASE_URL`, không phải sửa code provider.
+  - Khi ghép với prompt v5 của nhóm trưởng, bản tools.yaml v2.3 làm E09 hỏi lại thừa: mệnh đề web search trong `clarify` cộng với quy tắc tương tự trong prompt khiến model quá thận trọng. Tôi thu hẹp mệnh đề thành "chỉ hỏi lại khi chuỗi thực sự chứa identifier nội bộ", và extension trở lại 10/10.
+  - Hạn chế còn lại: bản tools.yaml cuối chưa chạy lại được suite base và adversarial với prompt v5 vì hết quota token miễn phí trong ngày. Việc này được ghi rõ trong `tools_schema_evidence.md` và cần chạy trước khi merge.
+- **Điều tôi học được từ phần việc này:**
+  - Tool name, description và JSON schema là một phần của prompt: một chữ `required` hay một câu mô tả quá rộng đều thay đổi hành vi routing. Nhưng description không phải rào chắn cứng: tấn công dán sẵn lời gọi hàm có `confirmed: true` (A04) vẫn vượt qua được khi prompt yếu, nên guardrail cần thêm lớp kiểm tra trong implementation.
+  - Automatic score không đủ: phải đọc `tool_results` và đếm file trong `tickets/` mới thấy A10 ở bản sau vẫn "FAIL" nhưng thực tế không còn ghi ticket.
+- **Nếu làm lại, tôi sẽ cải thiện điều gì:**
+  - Chạy mỗi version nhiều lần để tách nhiễu của model khỏi tác động thật của thay đổi, vì chênh lệch 1 case có thể do model không hoàn toàn tất định.
+  - Đưa `check_tools_sync.py` vào pre-commit hook hoặc CI để mọi thay đổi tools.yaml của nhóm được kiểm tra đồng bộ tự động.
 
 ### Nguyễn Nhân Sâm — MSSV: 2A202602445
 *(Thành viên tự điền và commit phần self-reflection của mình)*
